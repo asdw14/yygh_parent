@@ -37,16 +37,16 @@ public class HospitalSetController {
 
     @GetMapping("/findAll")
     @ApiOperation(value = "获取所有医院设置")
-    public Result findAllHospitalSet(){
+    public Result findAllHospitalSet() {
         List<HospitalSet> list = hospitalSetService.list();
         return Result.ok(list);
     }
 
     @DeleteMapping("{id}")
     @ApiOperation(value = "逻辑删除医院设置")
-    public Result removeHospitalSet(@PathVariable("id") Long id){
+    public Result removeHospitalSet(@PathVariable("id") Long id) {
         boolean flag = hospitalSetService.removeById(id);
-        if (flag){
+        if (flag) {
             return Result.ok();
 
         }
@@ -57,20 +57,18 @@ public class HospitalSetController {
     @PostMapping("/findPageHospSet/{current}/{limit}")
     @ApiOperation(value = "条件查询带分页")
     public Result findPageHospSet(@PathVariable long current, @PathVariable long limit,
-                                  @RequestBody(required = false) HospitalSetQueryVo hospitalSetQueryVo){
+                                  @RequestBody(required = false) HospitalSetQueryVo hospitalSetQueryVo) {
 
         QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
         Page<HospitalSet> page = new Page<>(current, limit);
-        if (hospitalSetQueryVo!=null){
-            String hosname = hospitalSetQueryVo.getHosname();
-            String hoscode = hospitalSetQueryVo.getHoscode();
+        String hosname = hospitalSetQueryVo.getHosname();
+        String hoscode = hospitalSetQueryVo.getHoscode();
 
-            if (!StringUtils.isEmpty(hosname)){
-                wrapper.like("hosname",hosname);
-            }
-            if (!StringUtils.isEmpty(hoscode)){
-                wrapper.like("hoscode",hoscode);
-            }
+        if (!StringUtils.isEmpty(hosname)) {
+            wrapper.like("hosname", hosname);
+        }
+        if (!StringUtils.isEmpty(hoscode)) {
+            wrapper.like("hoscode", hoscode);
         }
 
         Page<HospitalSet> hospitalSetPage = hospitalSetService.page(page, wrapper);
@@ -79,13 +77,13 @@ public class HospitalSetController {
 
     //4 添加医院设置
     @PostMapping("saveHospitalSet")
-    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet){
+    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet) {
         hospitalSet.setStatus(1);
-        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis()+""+new Random().nextInt(1000)));
+        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis() + "" + new Random().nextInt(1000)));
         boolean flag = hospitalSetService.save(hospitalSet);
-        if (flag){
+        if (flag) {
             return Result.ok();
-        }else {
+        } else {
             return Result.fail();
         }
     }
@@ -102,16 +100,16 @@ public class HospitalSetController {
     @PostMapping("updateHospitalSet")
     public Result updateHospitalSet(@RequestBody HospitalSet hospitalSet) {
         boolean flag = hospitalSetService.updateById(hospitalSet);
-        if (flag){
+        if (flag) {
             return Result.ok();
-        }else {
+        } else {
             return Result.fail();
         }
     }
 
     //7 批量删除医院设置
     @DeleteMapping("batchRemove")
-    public Result batchRemoveHospitalSet(@RequestBody List<Long> idList){
+    public Result batchRemoveHospitalSet(@RequestBody List<Long> idList) {
         hospitalSetService.removeByIds(idList);
         return Result.ok();
     }
@@ -140,12 +138,12 @@ public class HospitalSetController {
     }
 
     @GetMapping("/exce")
-    public Result exception(){
+    public Result exception() {
         try {
-            int a = 10/0;
+            int a = 10 / 0;
 
-        }catch (Exception e){
-            throw new YyghException("被除数不能是0",233);
+        } catch (Exception e) {
+            throw new YyghException("被除数不能是0", 233);
         }
         return Result.ok();
     }

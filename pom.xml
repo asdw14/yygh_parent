@@ -6,7 +6,6 @@
         <module>common</module>
         <module>service</module>
         <module>model</module>
-
     </modules>
 
     <parent>

@@ -9,6 +9,8 @@ import com.dizhongdi.service.DictService;
 import com.dizhongdi.yygh.model.cmn.Dict;
 import com.dizhongdi.yygh.vo.cmn.DictEeVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +31,7 @@ import java.util.List;
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
     @Override
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
     public List<Dict> findChlidData(Long id) {
         QueryWrapper<Dict> wrapper = new QueryWrapper<>();
         wrapper.eq("parent_id",id);
@@ -39,6 +42,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
         return dicts;
     }
+
 
     @Override
     public void exportData(HttpServletResponse response) {
@@ -63,8 +67,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
     }
 
-    //导入数据字典
+    /**
+     * 导入
+     * allEntries = true: 方法调用后清空所有缓存
+     * @param file
+     */
+    @CacheEvict(value = "dict", allEntries=true)
     @Override
+    //导入数据字典
     public void improtData(MultipartFile file) {
         try {
             EasyExcel.read(file.getInputStream(),DictEeVo.class,new DictListener(baseMapper)).sheet().doRead();

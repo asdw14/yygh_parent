@@ -12,5 +12,7 @@ import com.dizhongdi.yygh.model.hosp.HospitalSet;
  * @Author:dizhongdi
  */
 public interface HospitalSetService extends IService<HospitalSet> {
+    String getSignKey(String hoscode);
+
 }
 

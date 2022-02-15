@@ -23,4 +23,13 @@ public interface DictService extends IService<Dict> {
     void exportData(HttpServletResponse response);
 
     void improtData(MultipartFile file);
+
+    /**
+     * 根据上级编码与值获取数据字典名称
+     * @param parentDictCode
+     * @param value
+     * @return
+     */
+
+    String getNameByParentDictCodeAndValue(String parentDictCode, String value);
 }

@@ -2,6 +2,8 @@ package com.dizhongdi.yygh.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.dizhongdi.yygh.cmn.client.DictFeignClient;
+import com.dizhongdi.yygh.enums.DictEnum;
 import com.dizhongdi.yygh.model.hosp.Hospital;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import com.dizhongdi.yygh.repository.HospitalRepository;
@@ -30,6 +32,8 @@ import java.util.Map;
 public class HospitalServiceImpl implements HospitalService {
     @Autowired
     private HospitalRepository hospitalRepository;
+    @Autowired
+    private DictFeignClient dictFeignClient;
 
     @Override
     public void save(Map<String, Object> switchMap) {
@@ -77,8 +81,39 @@ public class HospitalServiceImpl implements HospitalService {
             //创建实例
             Example<Hospital> example = Example.of(hospital, matcher);
             Page<Hospital> pages = hospitalRepository.findAll(example, pageable);
-
+            pages.getContent().stream().forEach(item -> {
+                this.packHospital(item);
+            });
             return pages;
 
         }
+
+    @Override
+    public void updateStatus(String id, Integer status) {
+        if(status.intValue() == 0 || status.intValue() == 1) {
+            Hospital hospital = hospitalRepository.findById(id).get();
+            hospital.setStatus(status);
+            hospital.setUpdateTime(new Date());
+            hospitalRepository.save(hospital);
+        }
+
+    }
+
+    /**
+     * 封装数据
+     * @param hospital
+     * @return
+     */
+
+    private Hospital packHospital(Hospital hospital) {
+        String hostypeString = dictFeignClient.getName(DictEnum.HOSTYPE.getDictCode(), hospital.getHostype());
+//        省市区
+        String provinceString = dictFeignClient.getName(hospital.getProvinceCode());
+        String cityString = dictFeignClient.getName(hospital.getCityCode());
+        String districtString = dictFeignClient.getName(hospital.getDistrictCode());
+
+        hospital.getParam().put("hostypeString", hostypeString);
+        hospital.getParam().put("fullAddress", provinceString + cityString + districtString + hospital.getAddress());
+        return hospital;
+    }
 }

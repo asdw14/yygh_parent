@@ -27,8 +27,20 @@ public class HospitalController {
     @Autowired
     HospitalService hospitalService;
 
+    @ApiOperation(value = "更新上线状态")
+    @GetMapping("updateStatus/{id}/{status}")
+    public Result lock(
+            @ApiParam(name = "id", value = "医院id", required = true)
+            @PathVariable("id") String id,
+            @ApiParam(name = "status", value = "状态（0：未上线 1：已上线）", required = true)
+            @PathVariable("status") Integer status) {
+        hospitalService.updateStatus(id,status);
+        return Result.ok();
+    }
+
+
     @ApiOperation(value = "获取分页列表")
-    @GetMapping("{page}/{limit}")
+    @GetMapping("list/{page}/{limit}")
     public Result index(
             @ApiParam(name = "page", value = "当前页码", required = true)
             @PathVariable Integer page,

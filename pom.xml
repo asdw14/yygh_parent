@@ -6,6 +6,8 @@
         <module>common</module>
         <module>service</module>
         <module>model</module>
+        <module>service-client</module>
+        <module>service-client/service-cmn-client</module>
     </modules>
 
     <parent>

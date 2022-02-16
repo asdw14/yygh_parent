@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>com.dizhongdi</groupId>
+            <artifactId>service-cmn-client</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dizhongdi</groupId>
             <artifactId>yygh_parent</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

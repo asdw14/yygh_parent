@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dizhongdi.yygh.cmn.client.DictFeignClient;
 import com.dizhongdi.yygh.enums.DictEnum;
 import com.dizhongdi.yygh.model.hosp.BookingRule;
+import com.dizhongdi.yygh.model.hosp.Department;
 import com.dizhongdi.yygh.model.hosp.Hospital;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import com.dizhongdi.yygh.repository.HospitalRepository;
@@ -113,6 +114,18 @@ public class HospitalServiceImpl implements HospitalService {
 
         return hashMap;
     }
+
+//    根据医院编号获取医院名称接口
+    @Override
+    public String getHospName(String hoscode) {
+        Hospital byHoscode = hospitalRepository.getHospitalByHoscode(hoscode);
+        if (byHoscode!=null){
+            return byHoscode.getHosname();
+        }
+        return "";
+    }
+
+
 
     /**
      * 封装数据

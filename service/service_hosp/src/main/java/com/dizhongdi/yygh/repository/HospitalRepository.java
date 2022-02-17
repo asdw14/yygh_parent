@@ -1,5 +1,6 @@
 package com.dizhongdi.yygh.repository;
 
+import com.dizhongdi.yygh.model.hosp.Department;
 import com.dizhongdi.yygh.model.hosp.Hospital;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,7 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HospitalRepository extends MongoRepository<Hospital,String> {
     Hospital getHospitalByHoscode(String hoscode);
-
-    HospitalSet getByHoscode(String hoscode);
 
 }

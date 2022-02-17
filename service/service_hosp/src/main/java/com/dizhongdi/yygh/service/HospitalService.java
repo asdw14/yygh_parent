@@ -39,4 +39,11 @@ public interface HospitalService {
      */
 
     void updateStatus(String id, Integer status);
+
+    /**
+     * 医院详情
+     * @param id
+     * @return
+    */
+    Map<String, Object> showHospById(String id);
 }

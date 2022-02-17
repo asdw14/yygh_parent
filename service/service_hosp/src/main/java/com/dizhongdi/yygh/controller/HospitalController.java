@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * ClassName:HospitalController
  * Package:com.dizhongdi.yygh.controller
@@ -38,8 +40,14 @@ public class HospitalController {
         return Result.ok();
     }
 
+    @ApiOperation(value = "获取医院详情")
+    @GetMapping("show/{id}")
+    public Result show(@ApiParam(name = "id", value = "医院id", required = true) @PathVariable String id) {
+        Map<String,Object> hosp =  hospitalService.showHospById(id);
+        return Result.ok(hosp);
+    }
 
-    @ApiOperation(value = "获取分页列表")
+        @ApiOperation(value = "获取分页列表")
     @GetMapping("list/{page}/{limit}")
     public Result index(
             @ApiParam(name = "page", value = "当前页码", required = true)

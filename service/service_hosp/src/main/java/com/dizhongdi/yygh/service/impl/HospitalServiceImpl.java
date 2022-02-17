@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dizhongdi.yygh.cmn.client.DictFeignClient;
 import com.dizhongdi.yygh.enums.DictEnum;
+import com.dizhongdi.yygh.model.hosp.BookingRule;
 import com.dizhongdi.yygh.model.hosp.Hospital;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import com.dizhongdi.yygh.repository.HospitalRepository;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -97,6 +99,19 @@ public class HospitalServiceImpl implements HospitalService {
             hospitalRepository.save(hospital);
         }
 
+    }
+
+    @Override
+    public Map<String, Object> showHospById(String id) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        Hospital hospital = this.packHospital(hospitalRepository.findById(id).get());
+        BookingRule bookingRule = hospital.getBookingRule();
+        //单独处理更直观
+        hashMap.put("bookingRule",bookingRule);
+        hospital.setBookingRule(null);
+        hashMap.put("hospital",hospital);
+
+        return hashMap;
     }
 
     /**

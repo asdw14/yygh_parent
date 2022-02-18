@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -83,19 +84,16 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
     }
 
-    @Override
     @Cacheable(value = "dict",keyGenerator = "keyGenerator")
+    @Override
     public String getNameByParentDictCodeAndValue(String parentDictCode, String value) {
-        //如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
-        if (parentDictCode.isEmpty()){
-            QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
-            dictQueryWrapper.eq("value",value);
-            Dict dict = baseMapper.selectOne(dictQueryWrapper);
-            if (null!=dict){
+//如果value能唯一定位数据字典，parentDictCode可以传空，例如：省市区的value值能够唯一确定
+        if(StringUtils.isEmpty(parentDictCode)) {
+            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("value", value));
+            if(null != dict) {
                 return dict.getName();
             }
-
-        }else {
+        } else {
             Dict parentDict = this.getByDictsCode(parentDictCode);
             if(null == parentDict) return "";
             Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>().eq("parent_id", parentDict.getId()).eq("value", value));
@@ -104,8 +102,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             }
         }
         return "";
-
     }
+
 
     @Override
     public List<Dict> findByDictCode(String dictCode) {

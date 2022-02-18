@@ -19,7 +19,7 @@ import java.util.Map;
  * @Date: 2022/2/17 22:53
  * @Author:dizhongdi
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/admin/hosp/schedule")
 public class ScheduleController {

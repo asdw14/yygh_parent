@@ -8,6 +8,7 @@
         <module>model</module>
         <module>service-client</module>
         <module>service-client/service-cmn-client</module>
+        <module>server-gateway</module>
     </modules>
 
     <parent>

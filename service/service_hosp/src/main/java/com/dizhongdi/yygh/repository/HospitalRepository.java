@@ -6,6 +6,8 @@ import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * ClassName:HospitalRepository
  * Package:com.dizhongdi.yygh.repository
@@ -18,4 +20,6 @@ import org.springframework.stereotype.Repository;
 public interface HospitalRepository extends MongoRepository<Hospital,String> {
     Hospital getHospitalByHoscode(String hoscode);
 
+//    根据医院名称获取医院列表
+    List<Hospital> findHospitalByHosnameLike(String hosname);
 }

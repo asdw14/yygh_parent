@@ -106,6 +106,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
 
     @Override
+    @Cacheable(value = "dict")
     public List<Dict> findByDictCode(String dictCode) {
         Dict codeDict  = this.getByDictsCode(dictCode);
         if (codeDict!=null){

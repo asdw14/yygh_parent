@@ -2,6 +2,9 @@ package com.dizhongdi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dizhongdi.yygh.model.user.UserInfo;
+import com.dizhongdi.yygh.vo.user.LoginVo;
+
+import java.util.Map;
 
 /**
  * ClassName:UserInfoService
@@ -12,4 +15,5 @@ import com.dizhongdi.yygh.model.user.UserInfo;
  * @Author:dizhongdi
  */
 public interface UserInfoService extends IService<UserInfo> {
+    Map<String, Object> login(LoginVo loginVo);
 }

@@ -60,7 +60,7 @@ public class HospitalApiController {
         return Result.ok(departmentService.findDeptTree(hoscode));
     }
 
-    @ApiOperation(value = "医院预约挂号详情")
+    @ApiOperation(value = "根据医院编号获取医院预约挂号详情")
     @GetMapping("{hoscode}")
     public Result item(
             @ApiParam(name = "hoscode", value = "医院code", required = true)

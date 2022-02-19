@@ -8,14 +8,25 @@
     <name>service_user</name>
     <description>Demo project for Spring Boot</description>
 
+    <parent>
+        <artifactId>service</artifactId>
+        <groupId>com.dizhongdi</groupId>
+        <version>1.0</version>
+    </parent>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.dizhongdi</groupId>
+            <artifactId>service-cmn-client</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>

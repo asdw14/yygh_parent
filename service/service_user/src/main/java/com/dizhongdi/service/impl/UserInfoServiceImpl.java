@@ -84,4 +84,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         return map;
     }
     }
+
+    //根据openId查询用户信息
+    @Override
+    public UserInfo getByOpenid(String openId) {
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("openid",openId);
+        return baseMapper.selectOne(wrapper);
+    }
 }

@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.dizhongdu</groupId>
-    <artifactId>service_user</artifactId>
+    <groupId>com.dizhongdi</groupId>
+    <artifactId>service-msm</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>service_user</name>
+    <name>service-msm</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -22,30 +22,19 @@
     </properties>
 
     <dependencies>
-<!--    JWT    -->
+        <!--    JWT    -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.cloopen</groupId>
             <artifactId>java-sms-sdk</artifactId>
             <version>1.0.3</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.dizhongdi</groupId>
             <artifactId>service_util</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dizhongdi</groupId>
-            <artifactId>service-cmn-client</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
@@ -63,6 +52,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.cloopen</groupId>
+            <artifactId>java-sms-sdk</artifactId>
+            <version>1.0.3</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -95,7 +90,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.dizhongdi.ServiceUserApplication</mainClass>
+                    <mainClass>com.dizhongdi.servicemsm.ServiceMsmApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

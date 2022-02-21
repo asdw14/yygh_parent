@@ -16,4 +16,8 @@ import java.util.Map;
  */
 public interface UserInfoService extends IService<UserInfo> {
     Map<String, Object> login(LoginVo loginVo);
+
+    //根据openId查询用户信息
+    UserInfo getByOpenid(String openId);
+
 }

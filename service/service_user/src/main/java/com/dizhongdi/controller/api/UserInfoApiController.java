@@ -2,13 +2,13 @@ package com.dizhongdi.controller.api;
 
 import com.dizhongdi.result.Result;
 import com.dizhongdi.service.UserInfoService;
+import com.dizhongdi.utils.AuthContextHolder;
+import com.dizhongdi.yygh.model.user.UserInfo;
 import com.dizhongdi.yygh.vo.user.LoginVo;
+import com.dizhongdi.yygh.vo.user.UserAuthVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -35,8 +35,21 @@ public class UserInfoApiController {
         return Result.ok(info);
     }
 
+    //用户认证接口
+    @PostMapping("auth/userAuth")
+    public Result userAuth(@RequestBody UserAuthVo userAuthVo, HttpServletRequest request) {
+        //传递两个参数，第一个参数用户id，第二个参数认证数据vo对象
+        userInfoService.userAuth(AuthContextHolder.getUserId(request),userAuthVo);
+        return Result.ok();
+    }
+
+    //通过id获取用户信息接口
+    @GetMapping("auth/getUserInfo")
+    public Result getUserInfo(HttpServletRequest request) {
+        UserInfo userInfo = userInfoService.getById(AuthContextHolder.getUserId(request));
+        return Result.ok(userInfo);
+    }
 
 
 
-
-}
+    }

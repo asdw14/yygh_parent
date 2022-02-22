@@ -7,8 +7,10 @@ import com.dizhongdi.helper.JwtHelper;
 import com.dizhongdi.mapper.UserInfoMapper;
 import com.dizhongdi.result.ResultCodeEnum;
 import com.dizhongdi.service.UserInfoService;
+import com.dizhongdi.yygh.enums.AuthStatusEnum;
 import com.dizhongdi.yygh.model.user.UserInfo;
 import com.dizhongdi.yygh.vo.user.LoginVo;
+import com.dizhongdi.yygh.vo.user.UserAuthVo;
 import com.dizhongdi.yygh.vo.user.UserInfoQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -91,5 +93,21 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
         wrapper.eq("openid",openId);
         return baseMapper.selectOne(wrapper);
+    }
+
+    //用户认证
+    @Override
+    public void userAuth(Long userId, UserAuthVo userAuthVo) {
+        //根据用户id查询用户信息
+        UserInfo userInfo = baseMapper.selectById(userId);
+        //设置认证信息
+        //认证人姓名
+        userInfo.setName(userAuthVo.getName());
+        //其他认证信息
+        userInfo.setCertificatesType(userAuthVo.getCertificatesType());
+        userInfo.setCertificatesNo(userAuthVo.getCertificatesNo());
+        userInfo.setCertificatesUrl(userAuthVo.getCertificatesUrl());
+        userInfo.setAuthStatus(AuthStatusEnum.AUTH_RUN.getStatus());
+        baseMapper.updateById(userInfo);
     }
 }

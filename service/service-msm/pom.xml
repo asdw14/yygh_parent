@@ -22,6 +22,12 @@
     </properties>
 
     <dependencies>
+        <!--    邮件发送pom支持    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!--    JWT    -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

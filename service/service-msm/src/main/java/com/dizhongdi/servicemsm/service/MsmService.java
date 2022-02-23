@@ -11,4 +11,6 @@ package com.dizhongdi.servicemsm.service;
 public interface MsmService {
     boolean send(String phone,String code);
     String getCode();
+
+    void sendEmail(String email, String code);
 }

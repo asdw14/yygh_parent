@@ -5,9 +5,13 @@ import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.dizhongdi.servicemsm.service.MsmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName:MsmServiceImpl
@@ -19,7 +23,10 @@ import java.util.HashMap;
  */
 @Service
 public class MsmServiceImpl implements MsmService {
+    @Autowired
+    JavaMailSender javaMailSender;
 
+    //容联云发送手机验证码
     @Override
     public boolean send(String phone, String code) {
         //生产环境请求地址：app.cloopen.com
@@ -68,4 +75,17 @@ public class MsmServiceImpl implements MsmService {
             System.out.println(code);
             return code;
     }
+
+    @Override
+    @Async
+    public void sendEmail(String email, String code) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setSubject("尚医通项目登录验证码");
+        simpleMailMessage.setText("尊敬的:"+email+"您的注册校验验证码为：" + code + "有效期5分钟");
+        simpleMailMessage.setTo(email);
+        simpleMailMessage.setFrom("2755063993@qq.com");
+        javaMailSender.send(simpleMailMessage);
+    }
+
+
 }

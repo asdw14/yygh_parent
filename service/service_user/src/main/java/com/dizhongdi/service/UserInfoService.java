@@ -23,4 +23,6 @@ public interface UserInfoService extends IService<UserInfo> {
 
     //用户认证
     void userAuth(Long userId, UserAuthVo userAuthVo);
+
+    Map<String, Object> loginEmail(LoginVo loginVo);
 }

@@ -60,7 +60,6 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             userInfo.setStatus(1);
             baseMapper.insert(userInfo);
         }
-        //判断验证码是否一致
 
         //校验是否被禁用
         if (userInfo.getStatus() == 0){
@@ -109,5 +108,59 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userInfo.setCertificatesUrl(userAuthVo.getCertificatesUrl());
         userInfo.setAuthStatus(AuthStatusEnum.AUTH_RUN.getStatus());
         baseMapper.updateById(userInfo);
+    }
+
+//邮箱登录
+    @Override
+    public Map<String, Object> loginEmail(LoginVo loginVo) {
+        String phone = loginVo.getPhone();
+        String code = loginVo.getCode();
+        //校验参数
+        if (StringUtils.isEmpty(phone)||StringUtils.isEmpty(code)){
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+
+        //校验校验验证码
+        String mobleCode = (String) redisTemplate.opsForValue().get(phone);
+        if(!code.equals(mobleCode)) {
+            throw new YyghException(ResultCodeEnum.CODE_ERROR);
+        }else {
+
+            QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+            wrapper.eq("phone", loginVo.getPhone());
+            UserInfo userInfo = baseMapper.selectOne(wrapper);
+            if (userInfo == null) {    //第一次使用这个手机号登录
+                //添加数据到数据库
+                userInfo = new UserInfo();
+                userInfo.setName("");
+                userInfo.setPhone(loginVo.getPhone());
+                userInfo.setStatus(1);
+                baseMapper.insert(userInfo);
+            }
+
+            //校验是否被禁用
+            if (userInfo.getStatus() == 0) {
+                throw new YyghException(ResultCodeEnum.LOGIN_DISABLED_ERROR);
+            }
+
+            //不是第一次直接登录
+            HashMap<String, Object> map = new HashMap<>();
+            //返回登录用户名
+            String name = userInfo.getName();
+            if (StringUtils.isEmpty(name)) {
+                name = userInfo.getNickName();
+            }
+            if (StringUtils.isEmpty(name)) {
+                name = userInfo.getPhone();
+            }
+            map.put("name", name);
+
+            //返回token信息
+            String token = JwtHelper.createToken(userInfo.getId(), name);
+            map.put("token", token);
+            redisTemplate.delete(phone);
+            //返回登录信息
+            return map;
+        }
     }
 }

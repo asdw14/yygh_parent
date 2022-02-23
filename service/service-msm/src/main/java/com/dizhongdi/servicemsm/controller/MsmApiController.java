@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,5 +47,23 @@ public class MsmApiController {
         }else {
             return Result.fail();
         }
+    }
+
+    //发送手机验证码
+    @GetMapping("sendEmail/{email}")
+    public Result sendEmailCode(@PathVariable String email) {
+        //从redis获取验证码，如果获取获取到，返回ok
+        // key 手机号  value 验证码
+        String code = (String) redisTemplate.opsForValue().get(email);
+        if(!StringUtils.isEmpty(code)) {
+            return Result.ok();
+        }
+        //如果从redis获取不到，
+        // 生成验证码，
+        code = msmService.getCode();
+        msmService.sendEmail(email,code);
+        redisTemplate.opsForValue().set(email,code,5, TimeUnit.MINUTES);
+        return Result.ok();
+
     }
 }

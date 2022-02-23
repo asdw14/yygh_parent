@@ -35,6 +35,16 @@ public class UserInfoApiController {
         return Result.ok(info);
     }
 
+    @ApiOperation(value = "用户登录")
+    @PostMapping("loginEmail")
+    public Result loginEmail(@RequestBody LoginVo loginVo, HttpServletRequest request) {
+//        loginVo.setIp(IpUtil.getIpAddr(request));
+        Map<String, Object> info = userInfoService.loginEmail(loginVo);
+        return Result.ok(info);
+    }
+
+
+
     //用户认证接口
     @PostMapping("auth/userAuth")
     public Result userAuth(@RequestBody UserAuthVo userAuthVo, HttpServletRequest request) {
@@ -49,7 +59,5 @@ public class UserInfoApiController {
         UserInfo userInfo = userInfoService.getById(AuthContextHolder.getUserId(request));
         return Result.ok(userInfo);
     }
-
-
 
     }

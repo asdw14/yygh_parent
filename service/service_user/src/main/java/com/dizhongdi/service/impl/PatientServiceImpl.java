@@ -67,7 +67,8 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient> impl
         patient.getParam().put("provinceString", provinceString);
         patient.getParam().put("cityString", cityString);
         patient.getParam().put("districtString", districtString);
-        patient.getParam().put("fullAddress", provinceString + cityString + districtString + patient.getAddress());
+
+        patient.getParam().put("fullAddress", provinceString + cityString + districtString + (patient.getAddress() == null ? "" : patient.getAddress()));
         return patient;
 
     }

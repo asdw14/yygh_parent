@@ -3,12 +3,14 @@ package com.dizhongdi.servicemsm.service.impl;
 import com.cloopen.rest.sdk.BodyType;
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.dizhongdi.servicemsm.service.MsmService;
+import com.dizhongdi.yygh.vo.msm.MsmVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -85,6 +87,14 @@ public class MsmServiceImpl implements MsmService {
         simpleMailMessage.setTo(email);
         simpleMailMessage.setFrom("2755063993@qq.com");
         javaMailSender.send(simpleMailMessage);
+    }
+
+    @Override
+    public boolean send(MsmVo msmVo) {
+        if (!StringUtils.isEmpty(msmVo.getPhone())){
+//            this.sendEmail(msmVo.getPhone(),"666666");
+        }
+        return true;
     }
 
 

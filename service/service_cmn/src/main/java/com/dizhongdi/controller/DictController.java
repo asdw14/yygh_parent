@@ -1,7 +1,7 @@
 package com.dizhongdi.controller;
 
 import com.dizhongdi.result.Result;
-import com.dizhongdi.service.DictService;
+import com.dizhongdi.yygh.service.DictService;
 import com.dizhongdi.yygh.model.cmn.Dict;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

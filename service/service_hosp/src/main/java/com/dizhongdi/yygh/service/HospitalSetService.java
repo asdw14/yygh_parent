@@ -2,6 +2,7 @@ package com.dizhongdi.yygh.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
+import com.dizhongdi.yygh.vo.order.SignInfoVo;
 
 /**
  * ClassName:HospitalSetService
@@ -14,5 +15,7 @@ import com.dizhongdi.yygh.model.hosp.HospitalSet;
 public interface HospitalSetService extends IService<HospitalSet> {
     String getSignKey(String hoscode);
 
+    //获取医院签名信息
+    SignInfoVo getSignInfoVo(String hoscode);
 }
 

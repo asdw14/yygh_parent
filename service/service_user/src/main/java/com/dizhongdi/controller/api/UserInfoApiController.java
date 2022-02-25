@@ -1,7 +1,7 @@
 package com.dizhongdi.controller.api;
 
 import com.dizhongdi.result.Result;
-import com.dizhongdi.service.UserInfoService;
+import com.dizhongdi.yygh.service.UserInfoService;
 import com.dizhongdi.utils.AuthContextHolder;
 import com.dizhongdi.yygh.model.user.UserInfo;
 import com.dizhongdi.yygh.vo.user.LoginVo;

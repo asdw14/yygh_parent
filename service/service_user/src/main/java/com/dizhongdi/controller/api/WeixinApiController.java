@@ -5,7 +5,7 @@ import com.dizhongdi.exception.YyghException;
 import com.dizhongdi.helper.JwtHelper;
 import com.dizhongdi.result.Result;
 import com.dizhongdi.result.ResultCodeEnum;
-import com.dizhongdi.service.UserInfoService;
+import com.dizhongdi.yygh.service.UserInfoService;
 import com.dizhongdi.utils.ConstantWXPropertiesUtil;
 import com.dizhongdi.utils.HttpClientUtils;
 import com.dizhongdi.yygh.model.user.UserInfo;

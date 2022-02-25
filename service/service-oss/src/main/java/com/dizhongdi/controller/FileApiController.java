@@ -1,9 +1,8 @@
 package com.dizhongdi.controller;
 
 import com.dizhongdi.result.Result;
-import com.dizhongdi.service.FileService;
+import com.dizhongdi.yygh.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

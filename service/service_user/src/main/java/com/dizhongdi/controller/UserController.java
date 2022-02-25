@@ -2,7 +2,7 @@ package com.dizhongdi.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dizhongdi.result.Result;
-import com.dizhongdi.service.UserInfoService;
+import com.dizhongdi.yygh.service.UserInfoService;
 import com.dizhongdi.yygh.model.user.UserInfo;
 import com.dizhongdi.yygh.vo.user.UserInfoQueryVo;
 import io.swagger.annotations.ApiOperation;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
 
 /**

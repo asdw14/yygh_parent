@@ -4,7 +4,9 @@ import com.dizhongdi.result.Result;
 import com.dizhongdi.yygh.model.hosp.Schedule;
 import com.dizhongdi.yygh.service.DepartmentService;
 import com.dizhongdi.yygh.service.ScheduleService;
+import com.dizhongdi.yygh.vo.hosp.ScheduleOrderVo;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,4 +49,13 @@ public class ScheduleController {
         List<Schedule> list = scheduleService.getDetailSchedule(hoscode,depcode,workDate);
         return Result.ok(list);
     }
+
+    @ApiOperation(value = "根据排班id获取预约下单数据")
+    @GetMapping("inner/getScheduleOrderVo/{scheduleId}")
+    public ScheduleOrderVo getScheduleOrderVo(
+            @ApiParam(name = "scheduleId", value = "排班id", required = true)
+            @PathVariable("scheduleId") String scheduleId) {
+        return scheduleService.getScheduleOrderVo(scheduleId);
+    }
+
 }

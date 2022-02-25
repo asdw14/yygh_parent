@@ -1,6 +1,7 @@
 package com.dizhongdi.yygh.service;
 
 import com.dizhongdi.yygh.model.hosp.Schedule;
+import com.dizhongdi.yygh.vo.hosp.ScheduleOrderVo;
 import com.dizhongdi.yygh.vo.hosp.ScheduleQueryVo;
 import org.springframework.data.domain.Page;
 
@@ -63,4 +64,13 @@ public interface ScheduleService {
      * @return
      */
     Schedule getById(String scheduleId);
+
+    //根据排班id获取预约下单数据
+    ScheduleOrderVo getScheduleOrderVo(String scheduleId);
+
+    /**
+     * 修改排班
+     */
+    void update(Schedule schedule);
+
 }

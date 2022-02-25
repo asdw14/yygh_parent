@@ -2,9 +2,12 @@ package com.dizhongdi.yygh.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dizhongdi.exception.YyghException;
+import com.dizhongdi.result.ResultCodeEnum;
 import com.dizhongdi.yygh.mapper.HospitalSetMapper;
 import com.dizhongdi.yygh.model.hosp.HospitalSet;
 import com.dizhongdi.yygh.service.HospitalSetService;
+import com.dizhongdi.yygh.vo.order.SignInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,19 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
         wrapper.eq("hoscode",hoscode);
         HospitalSet hospitalSet = hospitalSetMapper.selectOne(wrapper);
         return hospitalSet.getSignKey();
+    }
+
+    //获取医院签名信息
+    @Override
+    public SignInfoVo getSignInfoVo(String hoscode) {
+        SignInfoVo signInfoVo = new SignInfoVo();
+        HospitalSet hospitalSet = baseMapper.selectOne(new QueryWrapper<HospitalSet>().eq("hoscode", hoscode));
+        if (hospitalSet==null){
+            throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+        }
+        signInfoVo.setSignKey(hospitalSet.getSignKey());
+        signInfoVo.setApiUrl(hospitalSet.getApiUrl());
+        return signInfoVo;
     }
 }
 

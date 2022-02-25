@@ -1,9 +1,11 @@
 package com.dizhongdi.controller.api;
 
 import com.dizhongdi.result.Result;
-import com.dizhongdi.service.PatientService;
+import com.dizhongdi.yygh.service.PatientService;
 import com.dizhongdi.utils.AuthContextHolder;
 import com.dizhongdi.yygh.model.user.Patient;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,4 +64,14 @@ public class PatientApiController {
         patientService.removeById(id);
         return Result.ok();
     }
+
+    @ApiOperation(value = "获取就诊人")
+    @GetMapping("inner/get/{id}")
+    public Patient getPatientOrder(
+            @ApiParam(name = "id", value = "就诊人id", required = true)
+            @PathVariable("id") Long id) {
+        return patientService.getById(id);
     }
+
+
+}

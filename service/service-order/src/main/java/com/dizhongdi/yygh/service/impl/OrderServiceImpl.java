@@ -19,9 +19,7 @@ import com.dizhongdi.yygh.service.RabbitService;
 import com.dizhongdi.yygh.user.client.PatientFeignClient;
 import com.dizhongdi.yygh.vo.hosp.ScheduleOrderVo;
 import com.dizhongdi.yygh.vo.msm.MsmVo;
-import com.dizhongdi.yygh.vo.order.OrderMqVo;
-import com.dizhongdi.yygh.vo.order.OrderQueryVo;
-import com.dizhongdi.yygh.vo.order.SignInfoVo;
+import com.dizhongdi.yygh.vo.order.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * ClassName:OrderServiceImpl
@@ -237,6 +237,22 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
         orderInfo.setOrderStatus(OrderStatusEnum.CANCLE.getStatus());
         this.updateById(orderInfo);
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getCountMap(OrderCountQueryVo orderCountQueryVo) {
+        HashMap<String, Object> map = new HashMap<>();
+        List<OrderCountVo> orderCountVoList = baseMapper.selectOrderCount(orderCountQueryVo);
+        //日期列表
+        System.out.println(orderCountVoList);
+        List<String> dateList
+                =orderCountVoList.stream().map(OrderCountVo::getReserveDate).collect(Collectors.toList());
+        //统计列表
+        List<Integer> countList
+                =orderCountVoList.stream().map(OrderCountVo::getCount).collect(Collectors.toList());
+        map.put("dateList",dateList);
+        map.put("countList",countList);
+        return map;
     }
 
 

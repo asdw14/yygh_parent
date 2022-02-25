@@ -10,6 +10,7 @@
         <module>service-client/service-cmn-client</module>
         <module>server-gateway</module>
         <module>service-client/service-user-client</module>
+        <module>service-client/service-order-client</module>
     </modules>
 
     <parent>

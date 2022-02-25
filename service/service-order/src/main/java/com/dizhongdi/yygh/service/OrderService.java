@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dizhongdi.yygh.model.order.OrderInfo;
+import com.dizhongdi.yygh.vo.order.OrderCountQueryVo;
 import com.dizhongdi.yygh.vo.order.OrderQueryVo;
 
 import java.util.Map;
@@ -36,7 +37,13 @@ public interface OrderService extends IService<OrderInfo> {
      */
     Map<String,Object> show(Long orderId);
 
-
+    //取消预约
     Boolean  cancelOrder(Long orderId);
+
+    /**
+     * 订单统计
+     */
+    Map<String, Object> getCountMap(OrderCountQueryVo orderCountQueryVo);
+
 
 }

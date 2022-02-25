@@ -6,15 +6,15 @@ import com.dizhongdi.result.Result;
 import com.dizhongdi.yygh.enums.OrderStatusEnum;
 import com.dizhongdi.yygh.model.order.OrderInfo;
 import com.dizhongdi.yygh.service.OrderService;
+import com.dizhongdi.yygh.vo.order.OrderCountQueryVo;
 import com.dizhongdi.yygh.vo.order.OrderQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * ClassName:OrderController
@@ -56,6 +56,12 @@ public class OrderController {
             @ApiParam(name = "orderId", value = "订单id", required = true)
             @PathVariable Long id) {
         return Result.ok(orderService.show(id));
+    }
+
+    @ApiOperation(value = "获取订单统计数据")
+    @PostMapping("inner/getCountMap")
+    public Map<String, Object> getCountMap(@RequestBody OrderCountQueryVo orderCountQueryVo) {
+        return orderService.getCountMap(orderCountQueryVo);
     }
 
 

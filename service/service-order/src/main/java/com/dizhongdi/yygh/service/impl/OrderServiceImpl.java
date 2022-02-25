@@ -226,6 +226,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> im
         return map;
     }
 
+    @Override
+    public Boolean cancelOrder(Long orderId) {
+        OrderInfo orderInfo = this.getById(orderId);
+//当前时间大约退号时间，不能取消预约
+        DateTime quitTime = new DateTime(orderInfo.getQuitTime());
+//        if(quitTime.isBeforeNow()) {
+//            throw new YyghException(ResultCodeEnum.CANCEL_ORDER_NO);
+//        }
+        orderInfo.setOrderStatus(OrderStatusEnum.CANCLE.getStatus());
+        this.updateById(orderInfo);
+        return true;
+    }
+
 
     private OrderInfo packOrderInfo(OrderInfo orderInfo) {
         orderInfo.getParam().put("orderStatusString", OrderStatusEnum.getStatusNameByStatus(orderInfo.getOrderStatus()));

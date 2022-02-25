@@ -37,5 +37,6 @@ public interface OrderService extends IService<OrderInfo> {
     Map<String,Object> show(Long orderId);
 
 
+    Boolean  cancelOrder(Long orderId);
 
 }
